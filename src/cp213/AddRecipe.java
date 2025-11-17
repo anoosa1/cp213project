@@ -130,10 +130,7 @@ public class AddRecipe extends JDialog {
 
   private List<String> parseListField(String text) {
     if (text.trim().isEmpty()) return new ArrayList<>();
-    return Arrays.stream(text.split(","))
-        .map(String::trim)
-        .filter(s -> !s.isEmpty())
-        .collect(Collectors.toList());
+    return Arrays.stream(text.split(",")).map(String::trim).filter(s -> !s.isEmpty()).collect(Collectors.toList());
   }
 
   public Recipe getRecipe() { return recipe; }

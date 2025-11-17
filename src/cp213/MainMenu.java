@@ -3,7 +3,8 @@ package cp213;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.util.ArrayList;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class MainMenu extends JFrame {
   private DefaultListModel<Recipe> recipeListModel;
@@ -62,13 +63,13 @@ public class MainMenu extends JFrame {
     // Get references to buttons from headerPanel
     JPanel headerPanel = (JPanel) getContentPane().getComponent(0);
     JPanel buttonPanel = (JPanel) headerPanel.getComponent(2);
-    JButton addButton = (JButton) buttonPanel.getComponent(1); // Remove is index 0, Add is index 1
+    JButton addButton = (JButton) buttonPanel.getComponent(1);
 
     // Add button action
     addButton.addActionListener(e -> {
       AddRecipe dialog = new AddRecipe(this);
       dialog.setVisible(true);
-      
+
       Recipe newRecipe = dialog.getRecipe();
       if (newRecipe != null) {
         recipeListModel.addElement(newRecipe);
@@ -92,6 +93,21 @@ public class MainMenu extends JFrame {
 
     // Initially disable remove button
     removeButton.setEnabled(false);
+
+    // Double-click listener for viewing recipe
+    recipeJList.addMouseListener(new MouseAdapter() {
+      @Override
+      public void mouseClicked(MouseEvent e) {
+        if (e.getClickCount() == 2) {
+          int index = recipeJList.locationToIndex(e.getPoint());
+          if (index != -1) {
+            Recipe selectedRecipe = recipeListModel.get(index);
+            ViewRecipe dialog = new ViewRecipe(MainMenu.this, selectedRecipe);
+            dialog.setVisible(true);
+          }
+        }
+      }
+    });
   }
 
   public void addRecipe(Recipe recipe) {

@@ -101,20 +101,33 @@ public class AddRecipe extends JDialog {
     cancelButton.addActionListener(e -> dispose());
   }
 
-  private boolean validateInput() {
+ private boolean validateInput() {
     if (nameField.getText().trim().isEmpty()) {
       JOptionPane.showMessageDialog(this, "Name cannot be empty", "Validation Error", JOptionPane.ERROR_MESSAGE);
       return false;
     }
+    int cookTime;
+    int servings;
+    
     try {
-      Integer.parseInt(cookTimeField.getText().trim());
-      Integer.parseInt(servingsField.getText().trim());
+      cookTime = Integer.parseInt(cookTimeField.getText().trim());
+      servings = Integer.parseInt(servingsField.getText().trim());
     } catch (NumberFormatException ex) {
       JOptionPane.showMessageDialog(this, "Time and servings must be numbers", "Validation Error", JOptionPane.ERROR_MESSAGE);
       return false;
     }
+    // Prevent negative or zero value
+    if (cookTime <= 0) {
+        JOptionPane.showMessageDialog(this, "Cook time must be a positive number", "Validation Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
+    if (servings <= 0) {
+        JOptionPane.showMessageDialog(this, "Servings must be a positive number", "Validation Error", JOptionPane.ERROR_MESSAGE);
+        return false;
+    }
     return true;
   }
+ 
 
   private void createRecipe() {
     String name = nameField.getText().trim();

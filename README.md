@@ -25,10 +25,10 @@ Compile and run.
 
 ## Team
 
-The people who build this 🧱 by 🧱:
+The people who build this:
 
 [Anas Sherif]
 
-[(To be added)]
+[@04ayla0506-ship-it]
 
-[(To be added)]
+[@boredqn]
